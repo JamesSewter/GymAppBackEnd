@@ -1,0 +1,5 @@
+{
+    "GET /api": {
+      "description": "Serves up a json representation of all the available endpoints of the gym app api"
+    }
+}

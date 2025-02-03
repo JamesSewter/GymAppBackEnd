@@ -1,0 +1,28 @@
+const workouts = [
+  {
+    date: '2025-01-30',
+    workout_name: 'Chest and Triceps',
+    exercises: [1, 2, 3],
+    finishedBoolean: false,
+  },
+  {
+    date: '2025-01-30',
+    workout_name: 'Back and Biceps',
+    exercises: [4, 5],
+    finishedBoolean: false,
+  },
+  {
+    date: '2025-01-30',
+    workout_name: 'Leg Day',
+    exercises: [6, 7],
+    finishedBoolean: false,
+  },
+  {
+    date: '2025-01-30',
+    workout_name: 'Shoulders and Arms',
+    exercises: [8, 9, 10],
+    finishedBoolean: false,
+  },
+];
+
+module.exports = workouts;
