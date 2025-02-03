@@ -17,9 +17,9 @@ const Workout = require('../models/workouts.model');
 
 const fs = require('fs/promises');
 
-//check here
 
-const uri = process.env.DATABASE_URI;
+const uri = process.env.DATABASE_URI; //currently test and dev are the same uri
+
 
 beforeAll(async () => {
   await mongoose.connect(uri);
@@ -39,8 +39,11 @@ describe('GET /api', () => {
       `${__dirname}/../endpoints.json`,
       'UTF8'
     );
-    const response = await request(app).get('/api');
+    const response = await request(server).get('/api');
+    console.log(response.body)
     expect(response.status).toBe(200);
     expect(response.body).toEqual(JSON.parse(endpoints));
   });
 });
+
+//write more tests here

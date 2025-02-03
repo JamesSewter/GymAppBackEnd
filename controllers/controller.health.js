@@ -1,10 +1,9 @@
-const endpointsJson = require("../endpoints.json");
+const endpointsJson = require('../endpoints.json');
 
 const healthController = {
-    healthCheck: (req, res) => {
-        res.status(200).send({ endpoints: endpointsJson });
-      }
-}
+  healthCheck: (req, res) => {
+    res.status(200).send(endpointsJson);
+  },
+};
 
-module.exports = healthController
-
+module.exports = healthController;

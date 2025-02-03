@@ -1,8 +1,8 @@
 //CHANGE TO MATCH SCHEMAS
 
-const User = require('../../models/users.model');
-const Exercise = require('../../models/exercises.model');
-const Workout = require('../../models/workouts.model');
+const User = require('../models/users.model');
+const Exercise = require('../models/exercises.model');
+const Workout = require('../models/workouts.model');
 
 const seed = async (
   usersData,
