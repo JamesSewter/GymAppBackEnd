@@ -2,7 +2,7 @@ const connectDB = require('./db/database');
 const cors = require('cors');
 const express = require('express');
 const router = express.Router();
-const AppError = require("./utils/AppError")
+const AppError = require('./utils/AppError');
 
 const healthController = require('./controllers/controller.health');
 const userController = require('./controllers/users.controller');
@@ -16,8 +16,7 @@ router.get('/api', healthController.healthCheck);
 //USERS
 router.get('/api/users/:userId', userController.getUserById);
 router.delete('/api/users/:userId', userController.deleteUserById);
-//
-//
+router.post('/api/users', userController.postAUser);
 //
 //EXERCISES
 

@@ -49,7 +49,7 @@ describe('GET /api/users/:userId', () => {
     const response = await request(server)
       .get(`/api/users/${testUserId}`)
       .expect(200);
-    expect(response.body.user).toMatchObject({
+    expect(response.body).toMatchObject({
       _id: testUserId,
       username: expect.any(String),
       password: expect.any(String),
@@ -92,5 +92,53 @@ describe('DELETE /api/users/:userId', () => {
       .delete(`/api/users/${testUserId}`)
       .expect(400);
     expect(response.body.error).toBe('Invalid user ID');
+  });
+});
+
+describe('POST /api/users', () => {
+  test('201: posts a new user and responds with the new user when weight given', async () => {
+    newUser = {
+      username: 'James',
+      password: 'verysecurepassword66',
+      weight: 80,
+    };
+    const response = await request(server)
+      .post(`/api/users`)
+      .send(newUser)
+      .expect(201);
+    expect(response.body).toMatchObject({
+      _id: expect.any(String),
+      username: expect.any(String),
+      password: expect.any(String),
+      weight: expect.any(Number),
+      __v: 0,
+    });
+  });
+  test('201: posts a new user and responds with the new user when weight not given', async () => {
+    newUser = {
+      username: 'James',
+      password: 'verysecurepassword66',
+    };
+    const response = await request(server)
+      .post(`/api/users`)
+      .send(newUser)
+      .expect(201);
+    expect(response.body).toMatchObject({
+      _id: expect.any(String),
+      username: expect.any(String),
+      password: expect.any(String),
+      __v: 0,
+    });
+  });
+  test('400: responds with bad request message when new user does not match the schema', async () => {
+    const newUser = {
+      password: 'verysecurepassword66',
+      weight: 80,
+    };
+    const response = await request(server)
+      .post(`/api/users`)
+      .send(newUser)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid new user');
   });
 });
