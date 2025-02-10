@@ -1,5 +1,8 @@
+const mongoose = require('mongoose');
+
 const exercises = [
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1a8'),
     exercise_name: 'Bench Press',
     bodyweightBoolean: false,
     suggestions: null,
@@ -11,6 +14,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1a9'),
     exercise_name: 'Incline Dumbbell Press',
     bodyweightBoolean: false,
     suggestions: null,
@@ -22,6 +26,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1aa'),
     exercise_name: 'Tricep Dips',
     bodyweightBoolean: false,
     suggestions: null,
@@ -33,6 +38,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1ab'),
     exercise_name: 'Pull-Ups',
     bodyweightBoolean: true,
     suggestions: null,
@@ -44,6 +50,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1ac'),
     exercise_name: 'Barbell Rows',
     bodyweightBoolean: false,
     suggestions: null,
@@ -55,6 +62,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1ad'),
     exercise_name: 'Barbell Squats',
     bodyweightBoolean: false,
     suggestions: null,
@@ -66,6 +74,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1ae'),
     exercise_name: 'Romanian Deadlift',
     bodyweightBoolean: false,
     suggestions: null,
@@ -77,6 +86,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1af'),
     exercise_name: 'Shoulder Press',
     bodyweightBoolean: false,
     suggestions: null,
@@ -88,6 +98,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1b0'),
     exercise_name: 'Lateral Raises',
     bodyweightBoolean: false,
     suggestions: null,
@@ -99,6 +110,7 @@ const exercises = [
     strengthScore: null,
   },
   {
+    _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1b1'),
     exercise_name: 'Bicep Curls',
     bodyweightBoolean: false,
     suggestions: null,

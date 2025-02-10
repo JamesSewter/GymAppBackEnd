@@ -1,27 +1,38 @@
 const connectDB = require('./db/database');
 const cors = require('cors');
-const express = require("express")
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const AppError = require("./utils/AppError")
 
 const healthController = require('./controllers/controller.health');
+const userController = require('./controllers/users.controller');
 
-connectDB()
+connectDB();
 
-const server = express()
+const server = express();
 server.use(express.json());
 
-//do routes
-
-router.get("/api", healthController.healthCheck)
-
+router.get('/api', healthController.healthCheck);
+//USERS
+router.get('/api/users/:userId', userController.getUserById);
+//
+//
+//
+//EXERCISES
 
 server.use(router);
 
-//error handling middleware here
+//error handling middleware here - separated concerns, error handled here, business logic in controller, errors defined by AppError
 server.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
+  //console.error(err.stack);
+
+  if (res.headersSent) {
+    return next(err);
+  }
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({ error: err.message });
+  }
+  res.status(500).json({ error: 'Internal server error' });
 });
 
-module.exports = server
-
+module.exports = server;
