@@ -15,6 +15,7 @@ server.use(express.json());
 router.get('/api', healthController.healthCheck);
 //USERS
 router.get('/api/users/:userId', userController.getUserById);
+router.delete('/api/users/:userId', userController.deleteUserById);
 //
 //
 //
