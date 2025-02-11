@@ -6,7 +6,7 @@ const AppError = require('./utils/AppError');
 
 const healthController = require('./controllers/controller.health');
 const userController = require('./controllers/users.controller');
-
+const exerciseController = require('./controllers/exercises.controller');
 connectDB();
 
 const server = express();
@@ -19,9 +19,11 @@ router.delete('/api/users/:userId', userController.deleteUserById);
 router.post('/api/users', userController.postAUser);
 router.patch('/api/users/:userId', userController.updateUser);
 //EXERCISES
+router.get('/api/exercises/:exerciseId', exerciseController.getExerciseById);
+
+//WORKOUTS
 
 server.use(router);
-
 //error handling middleware here - separated concerns, error handled here, business logic in controller, errors defined by AppError
 server.use((err, req, res, next) => {
   //console.error(err.stack);
