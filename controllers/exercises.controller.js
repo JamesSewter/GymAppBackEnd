@@ -17,6 +17,20 @@ const exerciseController = {
       next(err);
     }
   },
+  deleteExerciseById: async (req, res, next) => {
+    const { exerciseId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(exerciseId)) {
+      return next(new AppError('Invalid exercise ID', 400));
+    }
+    try {
+      const exercise = await Exercise.findOneAndDelete({ _id: exerciseId });
+      exercise
+        ? res.status(204).send()
+        : next(new AppError('Exercise not found', 404));
+    } catch (err) {
+      next(err);
+    }
+  },
 };
 
 module.exports = exerciseController;

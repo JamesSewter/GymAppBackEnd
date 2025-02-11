@@ -20,7 +20,7 @@ router.post('/api/users', userController.postAUser);
 router.patch('/api/users/:userId', userController.updateUser);
 //EXERCISES
 router.get('/api/exercises/:exerciseId', exerciseController.getExerciseById);
-
+router.delete('/api/exercises/:exerciseId', exerciseController.deleteExerciseById);
 //WORKOUTS
 
 server.use(router);

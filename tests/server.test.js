@@ -196,7 +196,7 @@ describe('PATCH /api/users/:userId', () => {
 });
 
 //Exercises - GET, DELETE, POST, PATCH:
-describe.only('GET /api/exercise/:exerciseId', () => {
+describe('GET /api/exercise/:exerciseId', () => {
   test('200: Responds with an exercise  corresponding to a valid exerciseId', async () => {
     const exerciseId = '679b71afebe324047c9ca1a8';
     const response = await request(server)
@@ -229,5 +229,28 @@ describe.only('GET /api/exercise/:exerciseId', () => {
       .get(`/api/exercises/${testExerciseId}`)
       .expect(400);
     expect(response.body.error).toBe('Invalid exerciseId');
+  });
+});
+
+describe('DELETE /api/exercises/:exerciseId', () => {
+  test('204: deletes an exercise for corresponding exercise ID', async () => {
+    const testExerciseId = '679b71afebe324047c9ca1a8';
+    await request(server).delete(`/api/exercises/${testExerciseId}`).expect(204);
+    await request(server).get(`/api/exercises/${testExerciseId}`).expect(404);
+  });
+  test('404: responds with an error if there is no corresponding exerciseId', async () => {
+    const testExerciseId = '00000a00000b00000c00000d';
+    await request(server).get(`/api/exercises/${testExerciseId}`).expect(404);
+    const response = await request(server)
+      .delete(`/api/exercises/${testExerciseId}`)
+      .expect(404);
+    expect(response.body.error).toBe('Exercise not found');
+  });
+  test('400: Respond with bad request error message for when exercise ID is invalid', async () => {
+    const testExerciseId = 'notANumber';
+    const response = await request(server)
+      .delete(`/api/exercises/${testExerciseId}`)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid exercise ID');
   });
 });
