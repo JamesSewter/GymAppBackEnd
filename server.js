@@ -17,7 +17,7 @@ router.get('/api', healthController.healthCheck);
 router.get('/api/users/:userId', userController.getUserById);
 router.delete('/api/users/:userId', userController.deleteUserById);
 router.post('/api/users', userController.postAUser);
-//
+router.patch('/api/users/:userId', userController.updateUser);
 //EXERCISES
 
 server.use(router);
