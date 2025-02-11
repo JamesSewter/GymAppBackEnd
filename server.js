@@ -21,6 +21,7 @@ router.patch('/api/users/:userId', userController.updateUser);
 //EXERCISES
 router.get('/api/exercises/:exerciseId', exerciseController.getExerciseById);
 router.delete('/api/exercises/:exerciseId', exerciseController.deleteExerciseById);
+router.post('/api/exercises', exerciseController.postAnExercise);
 //WORKOUTS
 
 server.use(router);
