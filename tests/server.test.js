@@ -204,14 +204,14 @@ describe('GET /api/exercise/:exerciseId', () => {
       .expect(200);
     expect(response.body).toMatchObject({
       _id: expect.any(String),
-      exercise_name: expect.any(String),
-      bodyweightBoolean: expect.any(Boolean),
+      exercise_name: 'Bench Press',
+      bodyweightBoolean: false,
       suggestions: null,
-      sets: null,
-      reps: null,
-      weights: null,
+      sets: 3,
+      reps: [8, 8, 7],
+      weights: [80, 80, 80],
       notes: null,
-      finishedBoolean: expect.any(Boolean),
+      finishedBoolean: false,
       strengthScore: null,
       __v: 0,
     });
@@ -257,7 +257,7 @@ describe('DELETE /api/exercises/:exerciseId', () => {
   });
 });
 
-describe.only('POST /api/exercises', () => {
+describe('POST /api/exercises', () => {
   test('201: posts a new exercise and responds with the new exercise', async () => {
     newExercise = {
       exercise_name: 'Tricep pushdown',
@@ -297,5 +297,78 @@ describe.only('POST /api/exercises', () => {
       .send(newExercise)
       .expect(400);
     expect(response.body.error).toBe('Invalid new exercise');
+  });
+});
+
+describe('PATCH /api/exercises/:exerciseId', () => {
+  test('200: patches an existing exercise and responds with the updated exercise', async () => {
+    const updatedData = {
+      sets: 4,
+      reps: [8, 8, 7, 7],
+      weights: [80, 80, 80, 80],
+      finishedBoolean: true,
+    };
+    const testExerciseId = '679b71afebe324047c9ca1a9';
+    const response = await request(server)
+      .patch(`/api/exercises/${testExerciseId}`)
+      .send(updatedData)
+      .expect(200);
+    expect(response.body).toMatchObject({
+      _id: '679b71afebe324047c9ca1a9',
+      exercise_name: 'Incline Dumbbell Press',
+      bodyweightBoolean: false,
+      suggestions: null,
+      sets: 4,
+      reps: [8, 8, 7, 7],
+      weights: [80, 80, 80, 80],
+      notes: null,
+      finishedBoolean: true,
+      strengthScore: null,
+      __v: 0,
+    });
+  });
+  test('404: responds with an error if there is no corresponding exerciseId', async () => {
+    const updatedData = {
+      sets: 4,
+      reps: [8, 8, 7, 7],
+      weights: [80, 80, 80, 80],
+      finishedBoolean: true,
+    };
+    const testExerciseId = '00000a00000b00000c00000d';
+    const response = await request(server)
+      .patch(`/api/exercises/${testExerciseId}`)
+      .send(updatedData)
+      .expect(404);
+    expect(response.body.error).toBe('Exercise not found');
+  });
+  test('400: Respond with bad request error message for when exercise ID is invalid', async () => {
+    const updatedData = {
+      sets: 4,
+      reps: [8, 8, 7, 7],
+      weights: [80, 80, 80, 80],
+      finishedBoolean: true,
+    };
+    const testExerciseId = 'notANumber';
+    const response = await request(server)
+      .patch(`/api/exercises/${testExerciseId}`)
+      .send(updatedData)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid exercise ID');
+  });
+  test('400: Responds with bad request error when request body is invalid', async () => {
+    const testExerciseId = '679b71afebe324047c9ca1a9';
+    const response = await request(server)
+      .patch(`/api/exercises/${testExerciseId}`)
+      .send({ invalidField: 'thisShouldNotExist' })
+      .expect(400);
+    expect(response.body.error).toBe('Invalid update fields');
+  });
+  test('400: Responds with bad request error when empty request body', async () => {
+    const testExerciseId = '679b70c0ebe324047c9ca19d';
+    const response = await request(server)
+      .patch(`/api/exercises/${testExerciseId}`)
+      .send()
+      .expect(400);
+    expect(response.body.error).toBe('No fields provided for update');
   });
 });
