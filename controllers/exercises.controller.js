@@ -31,6 +31,18 @@ const exerciseController = {
       next(err);
     }
   },
+  postAnExercise: async (req, res, next) => {
+    const newExercise = new Exercise(req.body);
+    try {
+      const savedExercise = await newExercise.save();
+      res.status(201).send(savedExercise);
+    } catch (err) {
+      if (err.name === 'ValidationError') {
+        return next(new AppError('Invalid new exercise', 400));
+      }
+      next(err);
+    }
+  },
 };
 
 module.exports = exerciseController;

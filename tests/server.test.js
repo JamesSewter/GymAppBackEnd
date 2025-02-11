@@ -235,7 +235,9 @@ describe('GET /api/exercise/:exerciseId', () => {
 describe('DELETE /api/exercises/:exerciseId', () => {
   test('204: deletes an exercise for corresponding exercise ID', async () => {
     const testExerciseId = '679b71afebe324047c9ca1a8';
-    await request(server).delete(`/api/exercises/${testExerciseId}`).expect(204);
+    await request(server)
+      .delete(`/api/exercises/${testExerciseId}`)
+      .expect(204);
     await request(server).get(`/api/exercises/${testExerciseId}`).expect(404);
   });
   test('404: responds with an error if there is no corresponding exerciseId', async () => {
@@ -252,5 +254,48 @@ describe('DELETE /api/exercises/:exerciseId', () => {
       .delete(`/api/exercises/${testExerciseId}`)
       .expect(400);
     expect(response.body.error).toBe('Invalid exercise ID');
+  });
+});
+
+describe.only('POST /api/exercises', () => {
+  test('201: posts a new exercise and responds with the new exercise', async () => {
+    newExercise = {
+      exercise_name: 'Tricep pushdown',
+      bodyweightBoolean: false,
+      suggestions: null,
+      sets: null,
+      reps: null,
+      weights: null,
+      notes: null,
+      finishedBoolean: false,
+      strengthScore: null,
+    };
+    const response = await request(server)
+      .post(`/api/exercises`)
+      .send(newExercise)
+      .expect(201);
+    expect(response.body).toMatchObject({
+      _id: expect.any(String),
+      exercise_name: expect.any(String),
+      bodyweightBoolean: expect.any(Boolean),
+      suggestions: null,
+      sets: null,
+      reps: null,
+      weights: null,
+      notes: null,
+      finishedBoolean: expect.any(Boolean),
+      strengthScore: null,
+      __v: 0,
+    });
+  });
+  test('400: responds with bad request message when new exercise does not match the schema', async () => {
+    const newExercise = {
+      name: 'i do not match the schema',
+    };
+    const response = await request(server)
+      .post(`/api/exercises`)
+      .send(newExercise)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid new exercise');
   });
 });
