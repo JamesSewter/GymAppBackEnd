@@ -6,9 +6,9 @@ const exercises = [
     exercise_name: 'Bench Press',
     bodyweightBoolean: false,
     suggestions: null,
-    sets: null,
-    reps: null,
-    weights: null,
+    sets: 3, 
+    reps: [8, 8, 7], 
+    weights: [80, 80, 80], 
     notes: null,
     finishedBoolean: false,
     strengthScore: null,
@@ -40,7 +40,7 @@ const exercises = [
   {
     _id: new mongoose.Types.ObjectId('679b71afebe324047c9ca1ab'),
     exercise_name: 'Pull-Ups',
-    bodyweightBoolean: true,
+    bodyweightBoolean: true, // Bodyweight exercise
     suggestions: null,
     sets: null,
     reps: null,
