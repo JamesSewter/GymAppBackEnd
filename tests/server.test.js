@@ -372,3 +372,34 @@ describe('PATCH /api/exercises/:exerciseId', () => {
     expect(response.body.error).toBe('No fields provided for update');
   });
 });
+
+//Workouts - GET, DELETE, POST, PATCH:
+describe('GET /api/workouts/:workoutId', () => {
+  test('200: Responds with a workout corresponding to a valid workoutId', async () => {
+    const testWorkoutId = '679b7223ebe324047c9ca1b2';
+    const response = await request(server)
+      .get(`/api/workouts/${testWorkoutId}`)
+      .expect(200);
+    expect(response.body).toMatchObject({
+      _id: expect.any(String),
+      date: expect.any(String),
+      workout_name: 'Chest and Triceps',
+      exercises: [1, 2, 3],
+      finishedBoolean: false,
+    });
+  });
+  test('404: responds with an error if there is no corresponding workoutId', async () => {
+    const testWorkoutId = '00000a00000b00000c00000d';
+    const response = await request(server)
+      .get(`/api/workouts/${testWorkoutId}`)
+      .expect(404);
+    expect(response.body.error).toBe('Workout not found');
+  });
+  test('400: Respond with bad request error message for when workoutId is invalid', async () => {
+    const testWorkoutId = 'notANumber';
+    const response = await request(server)
+      .get(`/api/workouts/${testWorkoutId}`)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid workout ID');
+  });
+});
