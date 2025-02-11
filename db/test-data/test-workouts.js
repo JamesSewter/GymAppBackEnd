@@ -32,3 +32,5 @@ const workouts = [
 ];
 
 module.exports = workouts;
+
+//change schemas so that exercises belong to a workout!!

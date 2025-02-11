@@ -7,6 +7,8 @@ const AppError = require('./utils/AppError');
 const healthController = require('./controllers/controller.health');
 const userController = require('./controllers/users.controller');
 const exerciseController = require('./controllers/exercises.controller');
+const workoutController = require('./controllers/workouts.controller');
+
 connectDB();
 
 const server = express();
@@ -24,6 +26,11 @@ router.delete('/api/exercises/:exerciseId', exerciseController.deleteExerciseByI
 router.post('/api/exercises', exerciseController.postAnExercise);
 router.patch('/api/exercises/:exerciseId', exerciseController.updateExercise);
 //WORKOUTS
+router.get('/api/workouts/:workoutId', workoutController.getWorkoutById);
+//
+//
+//
+
 
 server.use(router);
 //error handling middleware here - separated concerns, error handled here, business logic in controller, errors defined by AppError
