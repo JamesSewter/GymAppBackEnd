@@ -142,3 +142,55 @@ describe('POST /api/users', () => {
     expect(response.body.error).toBe('Invalid new user');
   });
 });
+
+describe('PATCH /api/users/:userId', () => {
+  test('200: patches an existing user and responds with the updated user', async () => {
+    const newWeight = { weight: 85 };
+    const testUserId = '679b70c0ebe324047c9ca19d';
+    const response = await request(server)
+      .patch(`/api/users/${testUserId}`)
+      .send(newWeight)
+      .expect(200);
+    expect(response.body).toMatchObject({
+      _id: expect.any(String),
+      username: expect.any(String),
+      password: expect.any(String),
+      weight: 85,
+      __v: 0,
+    });
+  });
+  test('404: responds with an error if there is no corresponding userId', async () => {
+    const newWeight = { weight: 85 };
+    const testUserId = '00000a00000b00000c00000d';
+    const response = await request(server)
+      .patch(`/api/users/${testUserId}`)
+      .send(newWeight)
+      .expect(404);
+    expect(response.body.error).toBe('User not found');
+  });
+  test('400: Respond with bad request error message for when user ID is invalid', async () => {
+    const newWeight = { weight: 85 };
+    const testUserId = 'notANumber';
+    const response = await request(server)
+      .patch(`/api/users/${testUserId}`)
+      .send(newWeight)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid user ID');
+  });
+  test('400: Responds with bad request error when request body is invalid', async () => {
+    const testUserId = '679b70c0ebe324047c9ca19d';
+    const response = await request(server)
+      .patch(`/api/users/${testUserId}`)
+      .send({ invalidField: 'thisShouldNotExist' })
+      .expect(400);
+    expect(response.body.error).toBe('Invalid update fields');
+  });
+  test('400: Responds with bad request error when empty request body', async () => {
+    const testUserId = '679b70c0ebe324047c9ca19d';
+    const response = await request(server)
+      .patch(`/api/users/${testUserId}`)
+      .send()
+      .expect(400);
+    expect(response.body.error).toBe('No fields provided for update');
+  });
+});
