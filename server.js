@@ -22,15 +22,17 @@ router.post('/api/users', userController.postAUser);
 router.patch('/api/users/:userId', userController.updateUser);
 //EXERCISES
 router.get('/api/exercises/:exerciseId', exerciseController.getExerciseById);
-router.delete('/api/exercises/:exerciseId', exerciseController.deleteExerciseById);
+router.delete(
+  '/api/exercises/:exerciseId',
+  exerciseController.deleteExerciseById
+);
 router.post('/api/exercises', exerciseController.postAnExercise);
 router.patch('/api/exercises/:exerciseId', exerciseController.updateExercise);
 //WORKOUTS
 router.get('/api/workouts/:workoutId', workoutController.getWorkoutById);
 //
+router.post('/api/workouts', workoutController.postAWorkout);
 //
-//
-
 
 server.use(router);
 //error handling middleware here - separated concerns, error handled here, business logic in controller, errors defined by AppError

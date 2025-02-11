@@ -17,6 +17,18 @@ const workoutController = {
       next(err);
     }
   },
+  postAWorkout: async (req, res, next) => {
+    const newWorkout = new Workout(req.body);
+    try {
+      const savedWorkout = await newWorkout.save();
+      res.status(201).send(savedWorkout);
+    } catch (err) {
+      if (err.name === 'ValidationError') {
+        return next(new AppError('Invalid new workout', 400));
+      }
+      next(err);
+    }
+  },
 };
 
 module.exports = workoutController;

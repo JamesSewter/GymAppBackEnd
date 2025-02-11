@@ -403,3 +403,34 @@ describe('GET /api/workouts/:workoutId', () => {
     expect(response.body.error).toBe('Invalid workout ID');
   });
 });
+
+describe('POST /api/workouts', () => {
+  test('201: posts a new workout and responds with the new workout', async () => {
+    newWorkout = {
+      date: Date.now(),
+      workout_name: 'Left body',
+      exercises: [4, 5],
+      finishedBoolean: false,
+    };
+    const response = await request(server)
+      .post(`/api/workouts`)
+      .send(newWorkout)
+      .expect(201);
+    expect(response.body).toMatchObject({
+      date: expect.any(String),
+      workout_name: 'Left body',
+      exercises: [4, 5],
+      finishedBoolean: false,
+    });
+  });
+  test('400: responds with bad request message when new workout does not match the schema', async () => {
+    const newWorkout = {
+      name: 'i do not match the schema',
+    };
+    const response = await request(server)
+      .post(`/api/workouts`)
+      .send(newWorkout)
+      .expect(400);
+    expect(response.body.error).toBe('Invalid new workout');
+  });
+});
